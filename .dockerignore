@@ -1,0 +1,55 @@
+# Maven build artifacts
+target/
+
+# Maven wrapper files (DO NOT COPY)
+mvnw
+mvnw.cmd
+.mvn/
+
+# Gradle wrapper files (DO NOT COPY)
+gradlew
+gradlew.bat
+gradle/wrapper/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE files
+.idea/
+.vscode/
+.eclipse/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# Documentation
+*.md
+README*
+LICENSE*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Test files
+**/test-output/
+
+# Build scripts
+*.sh
+*.bat
+
+# Kubernetes manifests
+kubernetes/
+
+# Docker files
+docker-compose*.yml
+Dockerfile*
