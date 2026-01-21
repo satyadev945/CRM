@@ -11,6 +11,9 @@ import java.util.List;
 
 public class CSVTest {
 
+    // Main method disabled for containerized web application
+    // Use CSVUploadController for CSV file uploads via HTTP instead
+    /*
     public static void main(String[] args) {
         File document = ReadDataUtils.ReadFile("Select CSV file", null, "Only CSV Files", "csv");
 //        System.out.println(document.getName());
@@ -32,7 +35,8 @@ public class CSVTest {
             e.printStackTrace();
         }
 		/*System.out.println(data.get(0)[1] + "\t" + data.get(0)[2]);
-		System.out.println(data.get(1)[1] + "\t" + data.get(1)[2]);*/
+		System.out.println(data.get(1)[1] + "\t" + data.get(1)[2]);*//*
     }
+    */
 
 }

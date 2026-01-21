@@ -1,0 +1,76 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Maven wrapper files (CRITICAL: exclude these)
+mvnw
+mvnw.cmd
+.mvn/
+
+# Gradle
+.gradle/
+build/
+!gradle-wrapper.jar
+*.sw?
+.#*
+*#
+*~
+.classpath
+.project
+.settings/
+bin/
+
+# Gradle wrapper files (CRITICAL: exclude these)
+gradlew
+gradlew.bat
+gradle/wrapper/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+.factorypath
+.recommenders/
+.apt_generated/
+.apt_generated_test/
+
+# Logs
+logs/
+*.log
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README*
+LICENSE
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+Jenkinsfile
+
+# Other
+.env
+.env.*
+*.tmp
+*.bak

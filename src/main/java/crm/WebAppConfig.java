@@ -3,6 +3,7 @@ package crm;
 import crm.viewResolver.CsvViewResolver;
 import crm.viewResolver.ExcelViewResolver;
 import crm.viewResolver.PdfViewResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
@@ -31,6 +32,9 @@ import java.util.Map;
 
 @Configuration
 public class WebAppConfig extends WebMvcConfigurerAdapter {
+
+    @Value("${spring.thymeleaf.prefix:templates/}")
+    private String templatePrefix;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -89,7 +93,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 
-        templateResolver.setPrefix("templates/");
+        templateResolver.setPrefix(templatePrefix);
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
