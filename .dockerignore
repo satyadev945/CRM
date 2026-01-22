@@ -1,0 +1,58 @@
+# Maven wrapper files (NEVER use in Docker)
+mvnw
+mvnw.cmd
+.mvn/
+
+# Build output
+target/
+*.class
+*.jar
+*.war
+
+# IDE files
+.idea/
+.vscode/
+.eclipse/
+.settings/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README*
+LICENSE*
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Scripts
+scripts/
+
+# Generated artifacts
+generated/
+
+# Test files
+src/test/
+
+# Configuration overrides
+local.properties
+application-local.properties
+application-local.yml

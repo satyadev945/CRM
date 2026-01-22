@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  crm-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crm-spring-boot:latest
+    container_name: crm-application
+    ports:
+      - "8080:8080"
+    environment:
+      # JVM Options
+      JAVA_OPTS: "-Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      
+      # Spring Boot Configuration
+      SPRING_PROFILES_ACTIVE: docker
+      SERVER_PORT: 8080
+      
+      # Database Configuration (external MySQL assumed)
+      DB_URL: "jdbc:mysql://mysql-host:3306/crm?useSSL=false"
+      DB_USER: "root"
+      DB_PASSWORD: "password"
+      DDL_AUTO: "validate"
+      
+      # Application Configuration
+      PDF_OUTPUT_PATH: "/app/pdf-output"
+      
+      # Timezone
+      TZ: "UTC"
+    volumes:
+      # Logs directory for application logs
+      - ./logs:/app/logs
+      
+      # Configuration directory for external configs
+      - ./config:/app/config
+      
+      # PDF output directory
+      - ./pdf-output:/app/pdf-output
+    networks:
+      - crm-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  crm-network:
+    driver: bridge
+    name: crm-network

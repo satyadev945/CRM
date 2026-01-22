@@ -1,0 +1,1 @@
+Shell script with interactive registry selection, tag sanitization, ECR repository auto-creation, and image build/push functionality

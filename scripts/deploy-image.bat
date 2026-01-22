@@ -1,0 +1,1 @@
+Windows batch script for ECS Fargate deployment with load balancer support and service management
