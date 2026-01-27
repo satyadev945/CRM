@@ -31,8 +31,13 @@ public class PdfController {
         if (!fileName.endsWith(".pdf")) {
             fileName += ".pdf";
         }
+        String basePath = System.getenv("PDF_STORAGE_PATH");
+        if (basePath == null || basePath.isEmpty()) {
+            basePath = System.getProperty("user.dir");
+        }
+        String fullPath = basePath + "/" + fileName;
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(fileName));
+        PdfWriter.getInstance(document, new FileOutputStream(fullPath));
         document.open();
         Paragraph paragraph = new Paragraph(text);
         document.add(paragraph);
