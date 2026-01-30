@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 @Controller
 @Slf4j
@@ -27,34 +27,16 @@ public class PdfController {
         this.pdfService = pdfService;
     }
 
-    /**
-     * Generate PDF using in-memory byte stream instead of local file system.
-     * In a cloud environment, this byte array should be uploaded to S3 or similar cloud storage.
-     * For now, we generate in-memory to avoid local file system dependencies.
-     */
-    private byte[] generateSamplePdf(String fileName, String text) throws DocumentException {
+    private void generateSamplePdf(String fileName, String text) throws FileNotFoundException, DocumentException {
         if (!fileName.endsWith(".pdf")) {
             fileName += ".pdf";
         }
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Document document = new Document();
-
-        try {
-            PdfWriter.getInstance(document, outputStream);
-            document.open();
-            Paragraph paragraph = new Paragraph(text);
-            document.add(paragraph);
-            document.close();
-
-            log.info("PDF generated successfully in memory: {}", fileName);
-            // TODO: Upload byte[] to AWS S3 using AWS SDK
-            // Example: s3Client.putObject(bucketName, fileName, new ByteArrayInputStream(outputStream.toByteArray()), metadata);
-
-            return outputStream.toByteArray();
-        } finally {
-            document.close();
-        }
+        PdfWriter.getInstance(document, new FileOutputStream(fileName));
+        document.open();
+        Paragraph paragraph = new Paragraph(text);
+        document.add(paragraph);
+        document.close();
     }
 
     @GetMapping("/pdf-generator")
@@ -69,12 +51,12 @@ public class PdfController {
             return "redirect:/pdf-generator";
         } else {
             try {
-                byte[] pdfBytes = generateSamplePdf(pdf.getName(), pdf.getContent());
-                // Store PDF bytes count for reference
-                log.info("Generated PDF size: {} bytes", pdfBytes.length);
+                generateSamplePdf(pdf.getName(), pdf.getContent());
                 pdfService.savePdf(pdf);
+            } catch (FileNotFoundException e) {
+                log.info("File Not Found");
             } catch (DocumentException e) {
-                log.error("Failed to generate PDF document", e);
+                log.info("Document");
             }
             return "pdf/success";
         }

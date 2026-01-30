@@ -20,18 +20,15 @@ public class CsvView extends AbstractCsvView {
         @SuppressWarnings("unchecked")
         List<User> users = (List<User>) model.get("users");
         String[] header = {"FirstName", "LastName", "Username", "Email", "Password", "Enabled", "Role_id", "Role_name"};
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
+                CsvPreference.STANDARD_PREFERENCE);
 
-        // Use try-with-resources to ensure proper resource cleanup in cloud environments
-        try (ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
-                CsvPreference.STANDARD_PREFERENCE)) {
+        csvWriter.writeHeader(header);
 
-            csvWriter.writeHeader(header);
-
-            for (User user : users) {
-                csvWriter.write(user, header);
-            }
-            // csvWriter automatically closed by try-with-resources
+        for (User user : users) {
+            csvWriter.write(user, header);
         }
+        csvWriter.close();
 
     }
 
