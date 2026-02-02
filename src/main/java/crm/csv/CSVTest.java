@@ -1,6 +1,8 @@
 package crm.csv;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 import crm.utils.ReadDataUtils;
 
 import java.io.File;
@@ -15,10 +17,8 @@ public class CSVTest {
         File document = ReadDataUtils.ReadFile("Select CSV file", null, "Only CSV Files", "csv");
 //        System.out.println(document.getName());
 
-        CSVReader reader;
         List<Object[]> data = new ArrayList<>();
-        try {
-            reader = new CSVReader(new FileReader(document));
+        try (CSVReader reader = new CSVReaderBuilder(new FileReader(document)).build()) {
             String[] line;
             while ((line = reader.readNext()) != null) {
 //                System.out.println(line[1] + "\t" + line[2]);
@@ -26,9 +26,8 @@ public class CSVTest {
                 if(line[1].equals("QUICK SUB")){
                     System.out.println(line[0] + "\t" + line[1] + "\t" + line[2]);
                 }
-
             }
-        } catch (IOException e) {
+        } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
 		/*System.out.println(data.get(0)[1] + "\t" + data.get(0)[2]);
