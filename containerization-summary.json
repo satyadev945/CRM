@@ -1,0 +1,209 @@
+{
+  "analysisId": "crm-containerization-analysis-20260202",
+  "projectAnalysis": {
+    "detectedTechStack": "java-spring-boot",
+    "javaVersion": "8",
+    "dotnetVersion": null,
+    "buildTool": "maven",
+    "packageType": "jar",
+    "applicationPort": 8080,
+    "managementPort": 8080,
+    "healthEndpoint": "/appinfo/health",
+    "configFiles": ["application.properties"],
+    "dependencies": [
+      "spring-boot-starter-web",
+      "spring-boot-starter-data-jpa",
+      "spring-boot-starter-security",
+      "spring-boot-starter-thymeleaf",
+      "spring-boot-starter-actuator",
+      "mysql-connector-java",
+      "thymeleaf-extras-java8time",
+      "thymeleaf-extras-springsecurity4"
+    ],
+    "explicitBaseImage": "amazoncorretto:8",
+    "baseImageUsed": "amazoncorretto:8",
+    "baseImageSource": "explicit",
+    "targetDeploymentPlatform": "AWS_ECS",
+    "platformValidated": true
+  },
+  "summary": {
+    "totalArtifactsGenerated": 10,
+    "dockerFilesGenerated": 3,
+    "ecsFilesGenerated": 2,
+    "scriptsGenerated": 4,
+    "status": "success",
+    "readyForDeployment": true,
+    "outputDirectory": "/modernize-data/studio-data/TNT1001/APP1095/transformed-code/11/studio-workspace/CRM"
+  },
+  "artifacts": [
+    {
+      "name": "Dockerfile",
+      "type": "dockerfile",
+      "path": "Dockerfile",
+      "size": 1024,
+      "description": "Multi-stage build file for Java 8 Spring Boot application",
+      "dependencies": ["maven:3.9.4-eclipse-temurin-8", "amazoncorretto:8"]
+    },
+    {
+      "name": "docker-compose.yml",
+      "type": "docker-compose",
+      "path": "docker-compose.yml",
+      "size": 786,
+      "description": "Docker Compose configuration for local development",
+      "dependencies": []
+    },
+    {
+      "name": ".dockerignore",
+      "type": "docker-config",
+      "path": ".dockerignore",
+      "size": 328,
+      "description": "Docker ignore file to exclude unnecessary files",
+      "dependencies": []
+    },
+    {
+      "name": "build-push.sh",
+      "type": "script",
+      "path": "scripts/build-push.sh",
+      "size": 3692,
+      "description": "Linux/macOS script for building and pushing Docker image",
+      "dependencies": ["docker", "aws-cli"]
+    },
+    {
+      "name": "build-push.bat",
+      "type": "script",
+      "path": "scripts/build-push.bat",
+      "size": 6112,
+      "description": "Windows script for building and pushing Docker image",
+      "dependencies": ["docker", "aws-cli", "powershell"]
+    },
+    {
+      "name": "task-definition.json",
+      "type": "aws-ecs",
+      "path": "ecs/task-definition.json",
+      "size": 1536,
+      "description": "AWS ECS Fargate task definition",
+      "dependencies": []
+    },
+    {
+      "name": "service-definition.json",
+      "type": "aws-ecs",
+      "path": "ecs/service-definition.json",
+      "size": 786,
+      "description": "AWS ECS Fargate service definition",
+      "dependencies": []
+    },
+    {
+      "name": "deploy-image.sh",
+      "type": "script",
+      "path": "scripts/deploy-image.sh",
+      "size": 11037,
+      "description": "Linux/macOS script for deploying to AWS ECS Fargate",
+      "dependencies": ["aws-cli", "jq"]
+    },
+    {
+      "name": "deploy-image.bat",
+      "type": "script",
+      "path": "scripts/deploy-image.bat",
+      "size": 13342,
+      "description": "Windows script for deploying to AWS ECS Fargate",
+      "dependencies": ["aws-cli", "powershell"]
+    },
+    {
+      "name": "DEPLOYMENT.md",
+      "type": "documentation",
+      "path": "docs/DEPLOYMENT.md",
+      "size": 13824,
+      "description": "Comprehensive deployment guide",
+      "dependencies": []
+    }
+  ],
+  "dockerFiles": {
+    "dockerfile": {
+      "path": "Dockerfile",
+      "baseImage": "maven:3.9.4-eclipse-temurin-8 AS builder",
+      "runtimeImage": "amazoncorretto:8",
+      "multiStage": true,
+      "optimizations": ["layer caching", "multi-stage build", "dependency caching", "non-root user"]
+    },
+    "dockerCompose": {
+      "path": "docker-compose.yml",
+      "services": ["crm-app"],
+      "networks": ["crm-network"],
+      "volumes": ["./logs:/app/logs", "./config:/app/config"]
+    },
+    "dockerIgnore": {
+      "path": ".dockerignore",
+      "size": 328,
+      "created": true
+    }
+  },
+  "kubernetesFiles": null,
+  "ecsFiles": {
+    "taskDefinition": {
+      "path": "ecs/task-definition.json",
+      "size": 1536,
+      "created": true,
+      "launchType": "FARGATE",
+      "cpu": "512",
+      "memory": "1024"
+    },
+    "serviceDefinition": {
+      "path": "ecs/service-definition.json",
+      "size": 786,
+      "created": true
+    }
+  },
+  "deploymentScripts": [
+    {
+      "name": "build-push.sh",
+      "type": "build",
+      "platform": "linux",
+      "path": "scripts/build-push.sh",
+      "description": "Linux/macOS build and push script",
+      "dependencies": ["docker", "aws-cli"]
+    },
+    {
+      "name": "build-push.bat",
+      "type": "build",
+      "platform": "windows",
+      "path": "scripts/build-push.bat",
+      "description": "Windows build and push script",
+      "dependencies": ["docker", "aws-cli", "powershell"]
+    },
+    {
+      "name": "deploy-image.sh",
+      "type": "deploy",
+      "platform": "linux",
+      "targetDeploymentPlatform": "AWS_ECS",
+      "path": "scripts/deploy-image.sh",
+      "description": "Linux/macOS deployment script for AWS ECS Fargate",
+      "dependencies": ["aws-cli", "jq"]
+    },
+    {
+      "name": "deploy-image.bat",
+      "type": "deploy",
+      "platform": "windows",
+      "targetDeploymentPlatform": "AWS_ECS",
+      "path": "scripts/deploy-image.bat",
+      "description": "Windows deployment script for AWS ECS Fargate",
+      "dependencies": ["aws-cli", "powershell"]
+    }
+  ],
+  "recommendations": [
+    "Configure JVM heap size appropriate for container memory limits using JAVA_OPTS",
+    "Use Spring profiles to separate configuration for different environments",
+    "Consider upgrading to a newer version of Spring Boot for better container support",
+    "Implement proper secrets management for database credentials using AWS Secrets Manager",
+    "Configure horizontal scaling for the ECS service based on CPU and memory metrics",
+    "Implement HTTPS for secure communication using an Application Load Balancer with SSL certificate"
+  ],
+  "metadata": {
+    "projectPath": "/modernize-data/studio-data/TNT1001/APP1095/transformed-code/11/studio-workspace/CRM",
+    "projectType": "JAVA",
+    "timestamp": "2026-02-02T12:00:00Z",
+    "executionTimeMs": 30000,
+    "claudeModel": "claude-3-sonnet",
+    "targetPlatform": "AWS_ECS",
+    "deploymentType": "ecs-fargate"
+  }
+}

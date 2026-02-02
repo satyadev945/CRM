@@ -1,0 +1,43 @@
+{
+  "serviceName": "crm-service",
+  "cluster": "{{CLUSTER_NAME}}",
+  "taskDefinition": "crm-task",
+  "desiredCount": 2,
+  "launchType": "FARGATE",
+  "schedulingStrategy": "REPLICA",
+  "deploymentConfiguration": {
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 50
+  },
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": ["{{SUBNET_1}}", "{{SUBNET_2}}"],
+      "securityGroups": ["{{SECURITY_GROUP}}"],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "loadBalancers": [
+    {
+      "targetGroupArn": "{{TARGET_GROUP_ARN}}",
+      "containerName": "crm",
+      "containerPort": 8080
+    }
+  ],
+  "healthCheckGracePeriodSeconds": 300,
+  "enableECSManagedTags": true,
+  "propagateTags": "SERVICE",
+  "tags": [
+    {
+      "key": "Environment",
+      "value": "{{ENVIRONMENT}}"
+    },
+    {
+      "key": "Application",
+      "value": "CRM"
+    },
+    {
+      "key": "Service",
+      "value": "crm-service"
+    }
+  ]
+}

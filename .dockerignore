@@ -1,0 +1,44 @@
+# Maven wrapper files
+mvnw
+mvnw.cmd
+.mvn/
+
+# Target directory
+target/
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.classpath
+*.project
+.settings/
+
+# Markdown files
+*.md
+
+# Logs
+logs/
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Test reports
+*/test-output/
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Deployment scripts and configs
+ecs/
+scripts/
