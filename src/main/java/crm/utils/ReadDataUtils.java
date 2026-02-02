@@ -1,22 +1,25 @@
 package crm.utils;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @deprecated This class uses Swing GUI components which are incompatible with cloud environments.
+ * Use {@link FileUtils} instead for cloud-compatible file operations.
+ */
+@Deprecated
+@Slf4j
 public class ReadDataUtils {
 
-    public static File ReadFile(String dialogMEssage, JFrame parent, String fileExtensionDescription,
+    /**
+     * @deprecated This method uses Swing JFileChooser which is incompatible with web applications.
+     * Use web-based file upload mechanisms instead.
+     */
+    @Deprecated
+    public static java.io.File ReadFile(String dialogMEssage, Object parent, String fileExtensionDescription,
                                 String... fileExtension) {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(fileExtensionDescription, fileExtension);
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(parent);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
-            return chooser.getSelectedFile();
-        }
-        return null;
+        log.error("ReadFile called in cloud environment - this method uses Swing GUI components which are not supported");
+        throw new UnsupportedOperationException(
+            "ReadDataUtils.ReadFile is not supported in cloud environments. Use web-based file uploads instead."
+        );
     }
-
 }

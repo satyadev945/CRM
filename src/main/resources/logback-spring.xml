@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Console appender configuration for local development -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- JSON appender for cloud environments that support log aggregation -->
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdc>true</includeMdc>
+            <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSSZZ</timestampPattern>
+            <fieldNames>
+                <timestamp>timestamp</timestamp>
+                <message>message</message>
+                <logger>logger</logger>
+                <thread>thread</thread>
+                <level>level</level>
+                <levelValue>[ignore]</levelValue>
+                <stackTrace>exception</stackTrace>
+            </fieldNames>
+        </encoder>
+    </appender>
+
+    <!-- Configure different logging patterns based on active Spring profile -->
+    <springProfile name="dev, default, test">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE" />
+        </root>
+
+        <!-- App-specific logging -->
+        <logger name="crm" level="DEBUG" />
+
+        <!-- Framework logging -->
+        <logger name="org.springframework" level="INFO" />
+        <logger name="org.hibernate" level="WARN" />
+    </springProfile>
+
+    <springProfile name="prod, cloud, aws">
+        <root level="INFO">
+            <appender-ref ref="JSON_CONSOLE" />
+        </root>
+
+        <!-- App-specific logging -->
+        <logger name="crm" level="INFO" />
+
+        <!-- Framework logging -->
+        <logger name="org.springframework" level="WARN" />
+        <logger name="org.hibernate" level="WARN" />
+        <logger name="com.zaxxer.hikari" level="WARN" />
+    </springProfile>
+</configuration>

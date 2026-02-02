@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # CRM Cloud Application
+  crm-app:
+    build: .
+    container_name: crm-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=cloud
+      - SPRING_DATASOURCE_URL=jdbc:mysql://crm-db:3306/crm?useSSL=false
+      - SPRING_DATASOURCE_USERNAME=crmuser
+      - SPRING_DATASOURCE_PASSWORD=crmpassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - AWS_REGION=us-east-1
+      - AWS_S3_BUCKET=crm-documents-dev
+      - ADMIN_USERNAME=admin
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=admin_secure_password
+      - ADMIN_FIRSTNAME=Admin
+      - ADMIN_LASTNAME=User
+    depends_on:
+      - crm-db
+    networks:
+      - crm-network
+
+  # MySQL Database
+  crm-db:
+    image: mysql:8.0
+    container_name: crm-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=crm
+      - MYSQL_USER=crmuser
+      - MYSQL_PASSWORD=crmpassword
+      - MYSQL_ROOT_PASSWORD=root_secure_password
+    volumes:
+      - crm-db-data:/var/lib/mysql
+    networks:
+      - crm-network
+    ports:
+      - "3306:3306"
+
+  # LocalStack for AWS Services emulation (for local development)
+  localstack:
+    image: localstack/localstack
+    container_name: crm-localstack
+    restart: unless-stopped
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=us-east-1
+      - DATA_DIR=/tmp/localstack/data
+    ports:
+      - "4566:4566"
+      - "4572:4572"
+    volumes:
+      - ./localstack:/docker-entrypoint-initaws.d
+      - localstack-data:/tmp/localstack
+    networks:
+      - crm-network
+
+volumes:
+  crm-db-data:
+  localstack-data:
+
+networks:
+  crm-network:
+    driver: bridge

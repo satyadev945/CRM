@@ -1,38 +1,24 @@
 package crm.csv;
 
-import com.opencsv.CSVReader;
-import crm.utils.ReadDataUtils;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * @deprecated This class is deprecated and should not be used in production.
+ * It uses desktop GUI components and direct file operations which are not cloud-compatible.
+ * Use crm.service.CsvService and crm.controller.FileUploadController instead.
+ */
+@Deprecated
+@Slf4j
 public class CSVTest {
 
+    /**
+     * @deprecated This main method is for testing only and should not be used in production.
+     */
+    @Deprecated
     public static void main(String[] args) {
-        File document = ReadDataUtils.ReadFile("Select CSV file", null, "Only CSV Files", "csv");
-//        System.out.println(document.getName());
-
-        CSVReader reader;
-        List<Object[]> data = new ArrayList<>();
-        try {
-            reader = new CSVReader(new FileReader(document));
-            String[] line;
-            while ((line = reader.readNext()) != null) {
-//                System.out.println(line[1] + "\t" + line[2]);
-                data.add(line);
-                if(line[1].equals("QUICK SUB")){
-                    System.out.println(line[0] + "\t" + line[1] + "\t" + line[2]);
-                }
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		/*System.out.println(data.get(0)[1] + "\t" + data.get(0)[2]);
-		System.out.println(data.get(1)[1] + "\t" + data.get(1)[2]);*/
+        log.error("CSVTest.main called - this class is not cloud-compatible and should not be used in production");
+        throw new UnsupportedOperationException(
+            "CSVTest is not supported in cloud environments. Use CsvService and web-based file uploads instead."
+        );
     }
-
 }

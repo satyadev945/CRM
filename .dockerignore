@@ -1,0 +1,41 @@
+# Ignore development and build files
+.git
+.github
+.gitignore
+.mvn
+.idea
+*.iml
+.vscode
+target/
+logs/
+*.log
+.DS_Store
+
+# Ignore Docker files to prevent recursion
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore documentation
+README.md
+LICENSE
+CHANGELOG.md
+docs/
+
+# Ignore scripts
+scripts/
+*.sh
+
+# Ignore test files
+src/test/
+
+# Ignore CI/CD files
+.circleci/
+.travis.yml
+Jenkinsfile
+*.yaml
+*.yml
+
+# Ignore local configuration files
+**/application-dev.properties
+**/application-local.properties
