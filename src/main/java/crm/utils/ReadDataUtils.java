@@ -1,7 +1,7 @@
 package crm.utils;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import jakarta.swing.*;
+import jakarta.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 public class ReadDataUtils {
