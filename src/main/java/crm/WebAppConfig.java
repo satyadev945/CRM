@@ -49,10 +49,9 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.favorPathExtension(true)
+        configurer.favorParameter(true)
                 .ignoreAcceptHeader(false)
-                .defaultContentType(MediaType.APPLICATION_JSON)
-                .useJaf(false);
+                .defaultContentType(MediaType.APPLICATION_JSON);
 
         final Map<String,MediaType> mediaTypes = new HashMap<>();
         mediaTypes.put("html", MediaType.TEXT_HTML);
@@ -92,7 +91,7 @@ public class WebAppConfig implements WebMvcConfigurer {
         templateResolver.setPrefix("templates/");
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setTemplateMode("HTML");
         templateResolver.setCharacterEncoding("UTF-8");
 
         return templateResolver;
