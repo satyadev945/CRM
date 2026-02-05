@@ -37,7 +37,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Contract showContract(Long id) {
-        return contractRepository.findOne(id);
+        return contractRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -102,8 +102,10 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public void saveContract(Contract contract) {
-        customerRepository.save(customerRepository.findAll());
-        userRepository.save(userRepository.findAll());
+        // Save each customer individually instead of trying to save the entire list at once
+        customerRepository.findAll().forEach(customerRepository::save);
+        // Save each user individually instead of trying to save the entire list at once
+        userRepository.findAll().forEach(userRepository::save);
         contractRepository.save(contract);
     }
 
