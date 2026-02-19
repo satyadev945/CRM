@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * Cloud-ready security configuration
+ * Updated for Spring Boot 2.x compatibility
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -36,13 +40,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin/**", "/user/delete/**").hasRole("ADMIN")
                 .antMatchers("/pdf-generator", "/search/**", "/customer/**", "/user/edit/**", "/user/list", "/contract/**").hasAnyRole( "ADMIN", "USER", "MANAGER", "OWNER")
+                // Allow health check endpoints for cloud load balancers
+                .antMatchers("/appinfo/health", "/appinfo/info", "/appinfo/metrics", "/appinfo/prometheus").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");
+                .exceptionHandling().accessDeniedPage("/403")
+                .and()
+                // Configure headers for cloud security
+                .headers()
+                    .frameOptions().sameOrigin()
+                    .xssProtection().block(true)
+                    .contentSecurityPolicy("default-src 'self'");
     }
 
 }
