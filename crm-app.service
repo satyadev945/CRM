@@ -1,0 +1,50 @@
+# Systemd service file for CRM Application
+# Copy this file to /etc/systemd/system/crm-app.service on your EC2 instance
+# 
+# Installation steps:
+# 1. sudo cp crm-app.service /etc/systemd/system/
+# 2. sudo systemctl daemon-reload
+# 3. sudo systemctl enable crm-app
+# 4. sudo systemctl start crm-app
+# 5. sudo systemctl status crm-app
+
+[Unit]
+Description=CRM Application
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/home/ec2-user
+
+# Environment variables - Update these with your actual values
+Environment="DATABASE_URL=jdbc:mysql://your-rds-endpoint:3306/crm?useSSL=true"
+Environment="DATABASE_USERNAME=admin"
+Environment="DATABASE_PASSWORD=your-password"
+Environment="AWS_S3_BUCKET_NAME=your-bucket-name"
+Environment="AWS_REGION=us-east-1"
+Environment="SPRING_PROFILES_ACTIVE=aws"
+Environment="SERVER_PORT=8080"
+Environment="DB_DDL_AUTO=validate"
+
+# Java options
+Environment="JAVA_OPTS=-Xms512m -Xmx2048m -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom"
+
+# Application JAR
+ExecStart=/usr/bin/java $JAVA_OPTS -jar /home/ec2-user/crm-app.jar
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=crm-app
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

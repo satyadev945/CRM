@@ -23,3 +23,24 @@ dist/
 nbdist/
 .nb-gradle/
 
+### Cloud Deployment - Sensitive Files ###
+.env
+*.pem
+*.key
+*.p12
+*.jks
+application-local.properties
+application-dev.properties
+*-credentials.json
+aws-credentials.properties
+
+### Logs ###
+*.log
+logs/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Generated PDFs (use S3 in cloud) ###
+*.pdf

@@ -11,9 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * Security Configuration for cloud deployment
+ * Updated for Spring Boot 2.7 compatibility
+ */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -33,16 +37,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+            .authorizeRequests()
+                // Admin-only endpoints
                 .antMatchers("/admin/**", "/user/delete/**").hasRole("ADMIN")
-                .antMatchers("/pdf-generator", "/search/**", "/customer/**", "/user/edit/**", "/user/list", "/contract/**").hasAnyRole( "ADMIN", "USER", "MANAGER", "OWNER")
+                // Authenticated user endpoints
+                .antMatchers("/pdf-generator", "/search/**", "/customer/**", 
+                           "/user/edit/**", "/user/list", "/contract/**")
+                    .hasAnyRole("ADMIN", "USER", "MANAGER", "OWNER")
+                // Actuator endpoints - allow for health checks (configure based on your needs)
+                .antMatchers("/actuator/health", "/actuator/info").permitAll()
+                .antMatchers("/actuator/**").hasRole("ADMIN")
+                // Public endpoints
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll()
+            .logout()
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");
+            .exceptionHandling()
+                .accessDeniedPage("/403")
+                .and()
+            // CSRF protection - keep enabled for security
+            .csrf()
+                .ignoringAntMatchers("/actuator/**"); // Allow actuator endpoints without CSRF for monitoring
     }
 
 }
