@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-crm-008
+  namespace: test-crm-008
+  labels:
+    app: test-crm-008
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-crm-008
+  template:
+    metadata:
+      labels:
+        app: test-crm-008
+        version: v1
+    spec:
+      containers:
+      - name: test-crm-008
+        image: {{IMAGE_URI}}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "docker"
+        - name: JAVA_OPTS
+          value: "-Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+        - name: TZ
+          value: "UTC"
+        # Database configuration (external service)
+        - name: DB_HOST
+          value: "{{DB_HOST}}"
+        - name: DB_PORT
+          value: "{{DB_PORT}}"
+        - name: DB_NAME
+          value: "{{DB_NAME}}"
+        - name: DB_USERNAME
+          value: "{{DB_USERNAME}}"
+        - name: DB_PASSWORD
+          value: "{{DB_PASSWORD}}"
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+        livenessProbe:
+          httpGet:
+            path: /appinfo/health
+            port: 8080
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /appinfo/health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      restartPolicy: Always

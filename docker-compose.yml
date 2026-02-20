@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  test-crm-008:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: test-crm-008:latest
+    container_name: test-crm-008
+    ports:
+      - "8080:8080"
+    environment:
+      # Spring Boot configuration
+      SPRING_PROFILES_ACTIVE: docker
+      
+      # Database configuration (external service)
+      DB_HOST: ${DB_HOST:-mysql-host}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-crm}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      
+      # JVM configuration
+      JAVA_OPTS: "-Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      
+      # Timezone
+      TZ: UTC
+    networks:
+      - app-network
+    volumes:
+      - ./config:/app/config:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "java", "-cp", "app.jar", "org.springframework.boot.loader.JarLauncher", "--health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  app-network:
+    driver: bridge

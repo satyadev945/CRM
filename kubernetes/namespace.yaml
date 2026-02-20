@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-crm-008
+  labels:
+    name: test-crm-008
+    app: test-crm-008
+    environment: production
