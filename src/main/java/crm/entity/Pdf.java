@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
-@Entity(name = "pdf")
+@Entity
+@Table(name = "pdf", indexes = {
+    @Index(name = "idx_pdf_name", columnList = "name")
+})
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,10 +19,12 @@ import jakarta.validation.constraints.Size;
 public class Pdf {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // PostgreSQL IDENTITY generation strategy (recommended for PostgreSQL 10+)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", length = 255)
     @Size(min = 2)
     private String name;
 

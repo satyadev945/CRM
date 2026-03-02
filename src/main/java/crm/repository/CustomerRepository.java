@@ -16,11 +16,11 @@ import java.util.Set;
  * searching works for ALL customers
  * also for NOT enabled (inactive) ones
  */
-
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query(value = "select max(id) from crm.customer", nativeQuery = true)
+    // PostgreSQL compatible query - uses COALESCE for null safety
+    @Query(value = "SELECT COALESCE(MAX(id), 0) FROM customer", nativeQuery = true)
     Long getMaxId();
 
     Iterable<Customer> findAllByEnabled(int enabled);
