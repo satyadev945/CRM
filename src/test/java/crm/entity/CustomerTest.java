@@ -28,8 +28,8 @@ class CustomerTest {
 
     @Test
     void customer_allArgsConstructor_shouldCreateInstanceWithValues() {
-        Customer c = new Customer(1L, "Test Company", "test@example.com", 123456789, 
-                categories, "John", "Doe", "New York", "123 Main St", 1);
+        Customer c = new Customer(1L, "Test Company", "test@example.com", "123456789", 
+                categories, "John", "Doe", "New York", "123 Main St", true);
 
         assertNotNull(c);
         assertEquals(1L, c.getId());
@@ -43,12 +43,12 @@ class CustomerTest {
                 .id(1L)
                 .name("Builder Company")
                 .email("builder@example.com")
-                .phone(987654321)
+                .phone("987654321")
                 .firstName("Jane")
                 .lastName("Smith")
                 .city("Boston")
                 .address("456 Oak Ave")
-                .enabled(1)
+                .enabled(true)
                 .categories(categories)
                 .build();
 
@@ -77,7 +77,7 @@ class CustomerTest {
 
     @Test
     void setPhone_shouldSetPhoneValue() {
-        customer.setPhone(555123456);
+        customer.setPhone("555123456");
         assertEquals(555123456, customer.getPhone());
     }
 
@@ -114,26 +114,26 @@ class CustomerTest {
 
     @Test
     void setEnabled_shouldSetEnabledValue() {
-        customer.setEnabled(1);
-        assertEquals(1, customer.getEnabled());
+        customer.setEnabled(true);
+        assertEquals(1, customer.isEnabled());
     }
 
     @Test
     void equals_withSameValues_shouldReturnTrue() {
-        Customer c1 = new Customer(1L, "Company", "email@test.com", 123, categories, 
-                "John", "Doe", "NYC", "123 St", 1);
-        Customer c2 = new Customer(1L, "Company", "email@test.com", 123, categories, 
-                "John", "Doe", "NYC", "123 St", 1);
+        Customer c1 = new Customer(1L, "Company", "email@test.com", "123", categories, 
+                "John", "Doe", "NYC", "123 St", true);
+        Customer c2 = new Customer(1L, "Company", "email@test.com", "123", categories, 
+                "John", "Doe", "NYC", "123 St", true);
 
         assertEquals(c1, c2);
     }
 
     @Test
     void hashCode_withSameValues_shouldReturnSameHashCode() {
-        Customer c1 = new Customer(1L, "Company", "email@test.com", 123, categories, 
-                "John", "Doe", "NYC", "123 St", 1);
-        Customer c2 = new Customer(1L, "Company", "email@test.com", 123, categories, 
-                "John", "Doe", "NYC", "123 St", 1);
+        Customer c1 = new Customer(1L, "Company", "email@test.com", "123", categories, 
+                "John", "Doe", "NYC", "123 St", true);
+        Customer c2 = new Customer(1L, "Company", "email@test.com", "123", categories, 
+                "John", "Doe", "NYC", "123 St", true);
 
         assertEquals(c1.hashCode(), c2.hashCode());
     }
@@ -152,8 +152,8 @@ class CustomerTest {
 
     @Test
     void setEnabled_withZero_shouldSetZero() {
-        customer.setEnabled(0);
-        assertEquals(0, customer.getEnabled());
+        customer.setEnabled(false);
+        assertEquals(0, customer.isEnabled());
     }
 
     @Test

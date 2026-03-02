@@ -33,22 +33,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findAllByEnabledTrue() {
-        return customerRepository.findAllByEnabled(1);
+        return customerRepository.findAllByEnabled(true);
     }
 
     @Override
     public Iterable<Customer> findAllByEnabledFalse() {
-        return customerRepository.findAllByEnabled(0);
+        return customerRepository.findAllByEnabled(false);
     }
 
     @Override
     public Customer findOneByEnabledTrueAndName(String name) {
-        return customerRepository.findOneByEnabledAndName(1, name);
+        return customerRepository.findOneByEnabledAndName(true, name);
     }
 
     @Override
     public Customer findOneByEnabledFalseAndName(String name) {
-        return customerRepository.findOneByEnabledAndName(0, name);
+        return customerRepository.findOneByEnabledAndName(false, name);
     }
 
     @Override
@@ -58,12 +58,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndEmail(String email) {
-        return customerRepository.findByEnabledAndEmail(1, email);
+        return customerRepository.findByEnabledAndEmail(true, email);
     }
 
     @Override
     public Iterable<Customer> findByEnabledFalseAndEmail(String email) {
-        return customerRepository.findByEnabledAndEmail(0, email);
+        return customerRepository.findByEnabledAndEmail(false, email);
     }
 
     @Override
@@ -72,28 +72,28 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Iterable<Customer> findByEnabledTrueAndPhone(int phone) {
-        return customerRepository.findByEnabledAndPhone(1, phone);
+    public Iterable<Customer> findByEnabledTrueAndPhone(String phone) {
+        return customerRepository.findByEnabledAndPhone(true, phone);
     }
 
     @Override
-    public Iterable<Customer> findByEnabledFalseAndPhone(int phone) {
-        return customerRepository.findByEnabledAndPhone(0, phone);
+    public Iterable<Customer> findByEnabledFalseAndPhone(String phone) {
+        return customerRepository.findByEnabledAndPhone(false, phone);
     }
 
     @Override
-    public Iterable<Customer> findByPhone(int phone) {
+    public Iterable<Customer> findByPhone(String phone) {
         return customerRepository.findByPhone(phone);
     }
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndCategories(Set<Category> category) {
-        return customerRepository.findByEnabledAndCategories(1, category);
+        return customerRepository.findByEnabledAndCategories(true, category);
     }
 //
     @Override
     public Iterable<Customer> findByEnabledFalseAndCategories(Set<Category> category) {
-        return customerRepository.findByEnabledAndCategories(0, category);
+        return customerRepository.findByEnabledAndCategories(false, category);
     }
 
     @Override
@@ -103,12 +103,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndFirstName(String firstName) {
-        return customerRepository.findByEnabledAndFirstName(1, firstName);
+        return customerRepository.findByEnabledAndFirstName(true, firstName);
     }
 
     @Override
     public Iterable<Customer> findByEnabledFalseAndFirstName(String firstName) {
-        return customerRepository.findByEnabledAndFirstName(0, firstName);
+        return customerRepository.findByEnabledAndFirstName(false, firstName);
     }
 
     @Override
@@ -118,12 +118,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndLastName(String lastName) {
-        return customerRepository.findByEnabledAndLastName(1, lastName);
+        return customerRepository.findByEnabledAndLastName(true, lastName);
     }
 
     @Override
     public Iterable<Customer> findByEnabledFalseAndLastName(String lastName) {
-        return customerRepository.findByEnabledAndLastName(0, lastName);
+        return customerRepository.findByEnabledAndLastName(false, lastName);
     }
 
     @Override
@@ -133,12 +133,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndFirstNameAndLastName(String firstName, String lastName) {
-        return customerRepository.findByEnabledAndFirstNameAndLastName(1, firstName, lastName);
+        return customerRepository.findByEnabledAndFirstNameAndLastName(true, firstName, lastName);
     }
 
     @Override
     public Iterable<Customer> findByEnabledFalseAndFirstNameAndLastName(String firstName, String lastName) {
-        return customerRepository.findByEnabledAndFirstNameAndLastName(0, firstName, lastName);
+        return customerRepository.findByEnabledAndFirstNameAndLastName(false, firstName, lastName);
     }
 
     @Override
@@ -148,12 +148,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndCity(String city) {
-        return customerRepository.findByEnabledAndCity(1, city);
+        return customerRepository.findByEnabledAndCity(true, city);
     }
 
     @Override
     public Iterable<Customer> findByEnabledFalseAndCity(String city) {
-        return customerRepository.findByEnabledAndCity(0, city);
+        return customerRepository.findByEnabledAndCity(false, city);
     }
 
     @Override
@@ -163,12 +163,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Iterable<Customer> findByEnabledTrueAndCityAndAddress(String city, String address) {
-        return customerRepository.findByEnabledAndCityAndAddress(1, city, address);
+        return customerRepository.findByEnabledAndCityAndAddress(true, city, address);
     }
 
     @Override
     public Iterable<Customer> findByEnabledFalseAndCityAndAddress(String city, String address) {
-        return customerRepository.findByEnabledAndCityAndAddress(0, city, address);
+        return customerRepository.findByEnabledAndCityAndAddress(false, city, address);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void saveCustomer(Customer customer) {
-        customer.setEnabled(1);
+        customer.setEnabled(true);
         customerRepository.save(customer);
     }
 //
@@ -189,7 +189,7 @@ public class CustomerServiceImpl implements CustomerService {
 //
 //    @Override
 //    public void deleteCustomer(Customer customer) {
-//        customer.setEnabled(0);
+//        customer.setEnabled(false);
 //        customerRepository.save(customer);
 //    }
 

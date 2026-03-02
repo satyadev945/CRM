@@ -24,12 +24,12 @@ class WriteCsvToResponseTest {
         testCustomer.setId(1L);
         testCustomer.setName("Test Company");
         testCustomer.setEmail("test@company.com");
-        testCustomer.setPhone(123456789);
+        testCustomer.setPhone("123456789");
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
         testCustomer.setCity("New York");
         testCustomer.setAddress("123 Main St");
-        testCustomer.setEnabled(1);
+        testCustomer.setEnabled(true);
 
         testCustomers = Arrays.asList(testCustomer);
 

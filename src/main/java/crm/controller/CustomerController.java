@@ -143,7 +143,7 @@ public class CustomerController {
                     customer.getLastName(),
                     customer.getCity(),
                     customer.getAddress(),
-                    customer.getEnabled());
+                    customer.isEnabled());
             customerService.saveCustomer(newCustomer);
             return "redirect:/customer/list";
         }

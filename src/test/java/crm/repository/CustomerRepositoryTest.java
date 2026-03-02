@@ -25,8 +25,8 @@ class CustomerRepositoryTest {
         Customer customer = new Customer();
         customer.setName("Test Company");
         customer.setEmail("test@company.com");
-        customer.setPhone(123456789);
-        customer.setEnabled(1);
+        customer.setPhone("123456789");
+        customer.setEnabled(true);
 
         Customer saved = customerRepository.save(customer);
 
@@ -47,11 +47,11 @@ class CustomerRepositoryTest {
         Customer customer = new Customer();
         customer.setName("Enabled Company");
         customer.setEmail("enabled@company.com");
-        customer.setPhone(111222333);
-        customer.setEnabled(1);
+        customer.setPhone("111222333");
+        customer.setEnabled(true);
         customerRepository.save(customer);
 
-        Iterable<Customer> enabled = customerRepository.findAllByEnabled(1);
+        Iterable<Customer> enabled = customerRepository.findAllByEnabled(true);
 
         assertNotNull(enabled);
         assertTrue(enabled.iterator().hasNext());
@@ -62,11 +62,11 @@ class CustomerRepositoryTest {
         Customer customer = new Customer();
         customer.setName("Unique Company");
         customer.setEmail("unique@company.com");
-        customer.setPhone(444555666);
-        customer.setEnabled(1);
+        customer.setPhone("444555666");
+        customer.setEnabled(true);
         customerRepository.save(customer);
 
-        Customer found = customerRepository.findOneByEnabledAndName(1, "Unique Company");
+        Customer found = customerRepository.findOneByEnabledAndName(true, "Unique Company");
 
         assertNotNull(found);
         assertEquals("Unique Company", found.getName());
@@ -77,11 +77,11 @@ class CustomerRepositoryTest {
         Customer customer = new Customer();
         customer.setName("Email Company");
         customer.setEmail("email@company.com");
-        customer.setPhone(777888999);
-        customer.setEnabled(1);
+        customer.setPhone("777888999");
+        customer.setEnabled(true);
         customerRepository.save(customer);
 
-        Iterable<Customer> found = customerRepository.findByEnabledAndEmail(1, "email@company.com");
+        Iterable<Customer> found = customerRepository.findByEnabledAndEmail(true, "email@company.com");
 
         assertNotNull(found);
         assertTrue(found.iterator().hasNext());
@@ -92,12 +92,12 @@ class CustomerRepositoryTest {
         Customer customer = new Customer();
         customer.setName("City Company");
         customer.setEmail("city@company.com");
-        customer.setPhone(123123123);
+        customer.setPhone("123123123");
         customer.setCity("New York");
-        customer.setEnabled(1);
+        customer.setEnabled(true);
         customerRepository.save(customer);
 
-        Iterable<Customer> found = customerRepository.findByEnabledAndCity(1, "New York");
+        Iterable<Customer> found = customerRepository.findByEnabledAndCity(true, "New York");
 
         assertNotNull(found);
         assertTrue(found.iterator().hasNext());
@@ -108,8 +108,8 @@ class CustomerRepositoryTest {
         Customer customer = new Customer();
         customer.setName("Delete Company");
         customer.setEmail("delete@company.com");
-        customer.setPhone(999999999);
-        customer.setEnabled(1);
+        customer.setPhone("999999999");
+        customer.setEnabled(true);
         Customer saved = customerRepository.save(customer);
 
         customerRepository.delete(saved);

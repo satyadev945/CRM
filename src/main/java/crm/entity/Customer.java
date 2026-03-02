@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 
@@ -41,8 +40,8 @@ public class Customer {
     private String email;
 
     @Column(name = "phone")
-    @Digits(fraction = 0, integer = 20)
-    private int phone;
+    @Size(max = 20)
+    private String phone;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "customer_category",
@@ -63,6 +62,6 @@ public class Customer {
     private String address;
 
     @Column(name = "enabled", nullable = false)
-    private int enabled;
+    private boolean enabled;
 
 }

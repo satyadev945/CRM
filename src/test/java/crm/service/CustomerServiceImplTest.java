@@ -32,7 +32,7 @@ class CustomerServiceImplTest {
         testCustomer.setId(1L);
         testCustomer.setName("Test Company");
         testCustomer.setEmail("test@company.com");
-        testCustomer.setEnabled(1);
+        testCustomer.setEnabled(true);
     }
 
     @Test
@@ -68,12 +68,12 @@ class CustomerServiceImplTest {
 
     @Test
     void findAllByEnabledTrue_shouldReturnEnabledCustomers() {
-        when(customerRepository.findAllByEnabled(1)).thenReturn(Arrays.asList(testCustomer));
+        when(customerRepository.findAllByEnabled(true)).thenReturn(Arrays.asList(testCustomer));
 
         Iterable<Customer> customers = customerService.findAllByEnabledTrue();
 
         assertNotNull(customers);
-        verify(customerRepository, times(1)).findAllByEnabled(1);
+        verify(customerRepository, times(1)).findAllByEnabled(true);
     }
 
     @Test
