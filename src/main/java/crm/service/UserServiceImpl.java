@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User showUser(Long id) {
-        return userRepository.findOne(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -83,18 +83,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUser(User user) {
-        String password = user.getPassword();
-        user.setPassword(passwordEncoder.encode(password));
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        Role userRole;
         try {
-            userRole = roleRepository.findOne(user.getRole().getId());
+            userRole = roleRepository.findById(user.getRole().getId()).orElse(null);
         } catch (NullPointerException e) {
             userRole = roleRepository.findByName("ROLE_USER");
-        } finally {
-            user.setRole(userRole);
-            user.setEnabled(1);
-            userRepository.save(user);
         }
+        user.setRole(userRole);
+        user.setEnabled(1);
+        userRepository.save(user);
     }
 
     @Override
