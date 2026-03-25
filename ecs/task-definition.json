@@ -1,0 +1,78 @@
+{
+  "family": "crm-045-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::{{ACCOUNT_ID}}:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::{{ACCOUNT_ID}}:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "crm-045",
+      "image": "{{IMAGE_URI}}",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "JAVA_OPTS",
+          "value": "-Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+        },
+        {
+          "name": "SPRING_PROFILES_ACTIVE",
+          "value": "docker"
+        },
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:mysql://{{DB_HOST}}:3306/crm?useSSL=false"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "{{DB_USERNAME}}"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "{{DB_PASSWORD}}"
+        },
+        {
+          "name": "SPRING_JPA_HIBERNATE_DDL_AUTO",
+          "value": "update"
+        },
+        {
+          "name": "MANAGEMENT_SECURITY_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "MANAGEMENT_CONTEXT_PATH",
+          "value": "/appinfo"
+        },
+        {
+          "name": "SPRING_THYMELEAF_CACHE",
+          "value": "false"
+        },
+        {
+          "name": "SPRING_THYMELEAF_MODE",
+          "value": "LEGACYHTML5"
+        },
+        {
+          "name": "TZ",
+          "value": "UTC"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/crm-045",
+          "awslogs-region": "{{AWS_REGION}}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
