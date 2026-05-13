@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/contract")
@@ -205,11 +205,6 @@ public class ContractController {
 
     /**
      * /contract/begin-date-search
-     * <p>
-     * Shows form to search contract by begin date
-     *
-     * @param model model to add attributes to
-     * @return contract/begin-date-search
      */
     @GetMapping("/begin-date-search")
     public String showBeginDateSearchForm(Model model) {
@@ -217,203 +212,84 @@ public class ContractController {
         return "contract/begin-date-search";
     }
 
-    /**
-     * /contract/begin-date-search
-     * <p>
-     * Processes request searching by begin date
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/begin-date-search")
     public String processRequestBeginDateSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByBeginDate(contract.getBeginDate()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/begin-date-before-search
-     * <p>
-     * Shows form to search contract by begin date before
-     *
-     * @param model model to add attributes to
-     * @return contract/begin-date-before-search
-     */
     @GetMapping("/begin-date-before-search")
     public String showBeginDateBeforeSearchForm(Model model) {
         model.addAttribute("contract", new Contract());
         return "contract/begin-date-before-search";
     }
 
-    /**
-     * /contract/begin-date-before-search
-     * <p>
-     * Processes request searching by begin date before
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/begin-date-before-search")
     public String processRequestBeginDateBeforeSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByBeginDateBefore(contract.getBeginDate()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/begin-date-after-search
-     * <p>
-     * Shows form to search contract by begin date after
-     *
-     * @param model model to add attributes to
-     * @return contract/begin-date-after-search
-     */
     @GetMapping("/begin-date-after-search")
     public String showBeginDateAfterSearchForm(Model model) {
         model.addAttribute("contract", new Contract());
         return "contract/begin-date-after-search";
     }
 
-    /**
-     * /contract/begin-date-after-search
-     * <p>
-     * Processes request searching by begin date after
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/begin-date-after-search")
     public String processRequestBeginDateAfterSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByBeginDateAfter(contract.getBeginDate()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/end-date-search
-     * <p>
-     * Shows form to search contract by end date
-     *
-     * @param model model to add attributes to
-     * @return contract/end-date-search
-     */
     @GetMapping("/end-date-search")
     public String showEndDateSearchForm(Model model) {
         model.addAttribute("contract", new Contract());
         return "contract/end-date-search";
     }
 
-    /**
-     * /contract/end-date-search
-     * <p>
-     * Processes request searching by end date
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/end-date-search")
     public String processRequestEndDateSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByEndDate(contract.getEndDate()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/end-date-before-search
-     * <p>
-     * Shows form to search contract by end date before
-     *
-     * @param model model to add attributes to
-     * @return contract/end-date-before-search
-     */
     @GetMapping("/end-date-before-search")
     public String showEndDateBeforeSearchForm(Model model) {
         model.addAttribute("contract", new Contract());
         return "contract/end-date-before-search";
     }
 
-    /**
-     * /contract/end-date-before-search
-     * <p>
-     * Processes request searching by end date before
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/end-date-before-search")
     public String processRequestEndDateBeforeSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByEndDateBefore(contract.getEndDate()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/end-date-after-search
-     * <p>
-     * Shows form to search contract by end date after
-     *
-     * @param model model to add attributes to
-     * @return contract/end-date-after-search
-     */
     @GetMapping("/end-date-after-search")
     public String showEndDateAfterSearchForm(Model model) {
         model.addAttribute("contract", new Contract());
         return "contract/end-date-after-search";
     }
 
-    /**
-     * /contract/end-date-after-search
-     * <p>
-     * Processes request searching by end date after
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/end-date-after-search")
     public String processRequestEndDateAfterSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByEndDateAfter(contract.getEndDate()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/status-search
-     * <p>
-     * Shows form to search contract by status
-     *
-     * @param model model to add attributes to
-     * @return contract/status-search
-     */
     @GetMapping("/status-search")
     public String showStatusSearchForm(Model model) {
         model.addAttribute("contract", new Contract());
         return "contract/status-search";
     }
 
-    /**
-     * /contract/status-search
-     * <p>
-     * Processes request searching by status
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/status-search")
     public String processRequestStatusSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByStatus(contract.getStatus()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/customer-search
-     * <p>
-     * Shows form to search contract by customer
-     *
-     * @param model model to add attributes to
-     * @return contract/customer-search
-     */
     @GetMapping("/customer-search")
     public String showCustomerSearchForm(Model model) {
         Iterable<Customer> customers = customerService.findAllByEnabledTrue();
@@ -422,29 +298,12 @@ public class ContractController {
         return "contract/customer-search";
     }
 
-    /**
-     * /contract/customer-search
-     * <p>
-     * Processes request searching by customer
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/customer-search")
     public String processRequestCustomerSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByCustomer(contract.getCustomer()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/customer-user-search
-     * <p>
-     * Shows form to search contract by customer and user
-     *
-     * @param model model to add attributes to
-     * @return contract/customer-user-search
-     */
     @GetMapping("/customer-user-search")
     public String showCustomerUserSearchForm(Model model) {
         Iterable<Customer> customers = customerService.findAllByEnabledTrue();
@@ -455,29 +314,12 @@ public class ContractController {
         return "contract/customer-user-search";
     }
 
-    /**
-     * /contract/customer-user-search
-     * <p>
-     * Processes request searching by customer and user
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/customer-user-search")
     public String processRequestCustomerUserSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByCustomerAndUser(contract.getCustomer(), contract.getUser()));
         return "contract/show-list";
     }
 
-    /**
-     * /contract/user-search
-     * <p>
-     * Shows form to search contract by user
-     *
-     * @param model model to add attributes to
-     * @return contract/user-search
-     */
     @GetMapping("/user-search")
     public String showUserSearchForm(Model model) {
         Iterable<User> users = userService.listAllUsers();
@@ -486,15 +328,6 @@ public class ContractController {
         return "contract/user-search";
     }
 
-    /**
-     * /contract/user-search
-     * <p>
-     * Processes request searching by user
-     *
-     * @param contract variable type Contract
-     * @param model    model to add attributes to
-     * @return contract/show-list
-     */
     @PostMapping("/user-search")
     public String processRequestUserSearch(@ModelAttribute Contract contract, Model model) {
         model.addAttribute("contracts", contractService.findAllByUser(contract.getUser()));
