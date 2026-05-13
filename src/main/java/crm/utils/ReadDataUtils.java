@@ -1,9 +1,13 @@
 package crm.utils;
 
+// Utility class using Java SE Swing for file chooser dialogs (javax.swing is part of Java SE, not Jakarta EE)
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
+/**
+ * Utility class for reading files via a Swing file chooser dialog.
+ */
 public class ReadDataUtils {
 
     public static File ReadFile(String dialogMEssage, JFrame parent, String fileExtensionDescription,
