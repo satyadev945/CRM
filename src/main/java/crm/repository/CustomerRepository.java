@@ -19,8 +19,15 @@ import java.util.Set;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
     @Query(value = "select max(id) from customer", nativeQuery = true)
+    Long getMaxId();
+
     Customer findOneByName(String name);
+
+    Customer findOneByEnabledAndName(int enabled, String name);
+
+    Iterable<Customer> findAllByEnabled(int enabled);
 
     Iterable<Customer> findByEnabledAndEmail(int enabled, String email);
     Iterable<Customer> findByEmail(String email);
