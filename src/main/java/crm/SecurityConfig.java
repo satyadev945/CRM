@@ -44,7 +44,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/**", "/user/delete/**").hasRole("ADMIN")
-                .requestMatchers("/pdf-generator", "/search/**", "/customer/**", "/user/edit/**", "/user/list", "/contract/**").hasAnyRole("ADMIN", "USER", "MANAGER", "OWNER")
+                .requestMatchers("/pdf-generator", "/search/**", "/customer/**", "/user/edit/**", "/user/list", "/contract/**", "/api/dashboard/**").hasAnyRole("ADMIN", "USER", "MANAGER", "OWNER")
                 .anyRequest().permitAll()
         )
         .formLogin(form -> form
