@@ -20,7 +20,7 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    public String showRegistrationPage(Model model, User user){
+    public String showRegistrationPage(Model model, User user) {
         model.addAttribute("user", user);
         return "register";
     }

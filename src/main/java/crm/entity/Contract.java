@@ -43,7 +43,4 @@ public class Contract {
     @ManyToOne
     private User user;
 
-//    @Transient
-//    private DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-
 }

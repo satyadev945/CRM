@@ -61,7 +61,7 @@ public class PdfView extends AbstractPdfView {
         cell.setPhrase(new Phrase("Role_name", font));
         table.addCell(cell);
 
-        for(User user : users){
+        for (User user : users) {
             table.addCell(user.getFirstName());
             table.addCell(user.getLastName());
             table.addCell(user.getUsername());

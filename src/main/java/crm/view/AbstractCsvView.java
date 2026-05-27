@@ -16,7 +16,6 @@ public abstract class AbstractCsvView extends AbstractView {
         setContentType(CONTENT_TYPE);
     }
 
-
     public void setUrl(String url) {
         this.url = url;
     }
