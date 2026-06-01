@@ -1,6 +1,6 @@
 package crm.controller;
 
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,9 +14,6 @@ public class MyErrorController implements ErrorController {
         return "Error handling";
     }
 
-    @Override
-    public String getErrorPath() {
-        return PATH;
-    }
-
+    // Note: getErrorPath() method has been removed in Spring Boot 3.x
+    // The error path is now configured via server.error.path property
 }

@@ -8,13 +8,7 @@ import crm.service.CustomerService;
 import crm.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
-@Controller
-@RequestMapping("/contract")
+import jakarta.validation.Valid;
 public class ContractController {
 
     private ContractService contractService;
