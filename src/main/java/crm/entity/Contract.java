@@ -14,13 +14,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class Contract {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private String name;
 

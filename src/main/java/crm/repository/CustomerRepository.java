@@ -15,13 +15,7 @@ import java.util.Set;
  * does NOT HAVE Enabled param
  * searching works for ALL customers
  * also for NOT enabled (inactive) ones
- */
-
-@Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
-
-    @Query(value = "select max(id) from crm.customer", nativeQuery = true)
-    Long getMaxId();
+    @Query(value = "SELECT MAX(id) FROM customer", nativeQuery = true)
 
     Iterable<Customer> findAllByEnabled(int enabled);
 

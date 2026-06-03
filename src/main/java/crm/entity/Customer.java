@@ -15,13 +15,7 @@ import java.util.Set;
 @Entity
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(nullable = false, unique = true)
     @Size(min = 2)
