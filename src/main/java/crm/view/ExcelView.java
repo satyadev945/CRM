@@ -1,18 +1,43 @@
 package crm.view;
 
 import crm.entity.User;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
-import org.springframework.web.servlet.view.document.AbstractXlsView;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.web.servlet.view.AbstractView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-public class ExcelView extends AbstractXlsView{
+public class ExcelView extends AbstractView {
+
+    public ExcelView() {
+        setContentType("application/vnd.ms-excel");
+    }
 
     @Override
+    protected boolean generatesDownloadContent() {
+        return true;
+    }
+
+    @Override
+    protected void renderMergedOutputModel(Map<String, Object> model,
+                                          HttpServletRequest request,
+                                          HttpServletResponse response) throws Exception {
+        
+        // Create workbook
+        Workbook workbook = new HSSFWorkbook();
+        
+        // Build the Excel document
+        buildExcelDocument(model, workbook, request, response);
+        
+        // Write to response
+        response.setContentType(getContentType());
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
+
     protected void buildExcelDocument(Map<String, Object> model,
                                       Workbook workbook,
                                       HttpServletRequest request,
@@ -32,10 +57,10 @@ public class ExcelView extends AbstractXlsView{
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
         font.setFontName("Arial");
-        style.setFillForegroundColor(HSSFColor.BLUE.index);
+        style.setFillForegroundColor(IndexedColors.BLUE.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         font.setBold(true);
-        font.setColor(HSSFColor.WHITE.index);
+        font.setColor(IndexedColors.WHITE.getIndex());
         style.setFont(font);
 
 
