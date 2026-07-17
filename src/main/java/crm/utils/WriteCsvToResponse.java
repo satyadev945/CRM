@@ -21,7 +21,7 @@ public class WriteCsvToResponse {
             ColumnPositionMappingStrategy columnPositionMappingStrategy = new ColumnPositionMappingStrategy();
 
             columnPositionMappingStrategy.setType(Customer.class);
-            columnPositionMappingStrategy.generateHeader();
+            // columnPositionMappingStrategy.generateHeader(); // Deprecated in newer OpenCSV
 
             String[] columns = new String[]{"id", "name", "email", "phone", "firstName", "lastName", "city", "address", "enabled"};
             columnPositionMappingStrategy.setColumnMapping(columns);

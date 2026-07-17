@@ -1,13 +1,11 @@
 package crm.view;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.web.servlet.view.AbstractView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
@@ -34,7 +32,7 @@ public abstract class AbstractPdfView extends AbstractView {
         ByteArrayOutputStream baos = createTemporaryOutputStream();
 
         // Apply preferences and build metadata.
-        Document document = new Document(PageSize.A4.rotate(), 36, 36, 54, 36);
+        Document document = new Document(com.itextpdf.text.PageSize.A4.rotate(), 36, 36, 54, 36);
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         prepareWriter(model, writer, request);
         buildPdfMetadata(model, document, request);
@@ -57,9 +55,9 @@ public abstract class AbstractPdfView extends AbstractView {
      * @param model the model, in case meta information must be populated from it
      * @param writer the PdfWriter to prepare
      * @param request in case we need locale etc. Shouldn't look at attributes.
-     * @throws DocumentException if thrown during writer preparation
+     * @throws Exception if thrown during writer preparation
      */
-    protected void prepareWriter(Map<String, Object> model, PdfWriter writer, HttpServletRequest request) throws DocumentException {
+    protected void prepareWriter(Map<String, Object> model, PdfWriter writer, HttpServletRequest request) throws Exception {
         writer.setViewerPreferences(getViewerPreferences());
     }
 

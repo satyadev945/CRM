@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-@Controller
-public class RegisterController {
-
-    private UserService userService;
-
-    public RegisterController(UserService userService) {
-        this.userService = userService;
+import jakarta.validation.Valid;
     }
 
     @GetMapping("/register")

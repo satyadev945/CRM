@@ -1,12 +1,8 @@
 package crm.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import lombok.*;
+import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 
 @Entity(name = "pdf")
 @Data
