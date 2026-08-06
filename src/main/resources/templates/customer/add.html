@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Add customer</title>
-</head>
-<body>
-
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';">
 <h2>Add customer form</h2>
 <form th:action="@{|/customer/add|}" th:object="${customer}" method="post">
     <div>

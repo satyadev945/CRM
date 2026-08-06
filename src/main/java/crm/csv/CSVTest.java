@@ -3,36 +3,41 @@ package crm.csv;
 import com.opencsv.CSVReader;
 import crm.utils.ReadDataUtils;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CSVTest {
 
     public static void main(String[] args) {
-        File document = ReadDataUtils.ReadFile("Select CSV file", null, "Only CSV Files", "csv");
-//        System.out.println(document.getName());
+        // Replaced local File usage with S3 retrieval to ensure cloud readiness.
+        // In a real scenario, bucketName and key would be provided via configuration or environment variables.
+        String bucketName = System.getenv("S3_BUCKET_NAME");
+        String key = System.getenv("S3_FILE_KEY");
 
-        CSVReader reader;
-        List<Object[]> data = new ArrayList<>();
-        try {
-            reader = new CSVReader(new FileReader(document));
+        if (bucketName == null || key == null) {
+            System.err.println("S3_BUCKET_NAME and S3_FILE_KEY environment variables must be set.");
+            return;
+        }
+
+        try (InputStream inputStream = ReadDataUtils.readFileFromS3(bucketName, key);
+             BufferedReader readerWriter = new BufferedReader(new InputStreamReader(inputStream))) {
+            
+            CSVReader reader = new CSVReader(readerWriter);
+            List<Object[]> data = new ArrayList<>();
             String[] line;
             while ((line = reader.readNext()) != null) {
-//                System.out.println(line[1] + "\t" + line[2]);
                 data.add(line);
-                if(line[1].equals("QUICK SUB")){
-                    System.out.println(line[0] + "\t" + line[1] + "\t" + line[2]);
+                if(line.length > 1 && "QUICK SUB".equals(line[1])){
+                    System.out.println(line[0] + "\t" + line[1] + "\t" + (line.length > 2 ? line[2] : ""));
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-		/*System.out.println(data.get(0)[1] + "\t" + data.get(0)[2]);
-		System.out.println(data.get(1)[1] + "\t" + data.get(1)[2]);*/
     }
 
 }
