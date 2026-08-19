@@ -1,38 +1,54 @@
 package crm.csv;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.opencsv.CSVReader;
-import crm.utils.ReadDataUtils;
-
-import java.io.File;
-import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CSVTest {
 
     public static void main(String[] args) {
-        File document = ReadDataUtils.ReadFile("Select CSV file", null, "Only CSV Files", "csv");
-//        System.out.println(document.getName());
+        // Azure Storage connection string should be retrieved from environment variables for cloud readiness
+        String connectStr = System.getenv("AZURE_STORAGE_CONNECTION_STRING");
+        String containerName = System.getenv("AZURE_STORAGE_CONTAINER_NAME");
+        String blobName = System.getenv("AZURE_STORAGE_BLOB_NAME");
 
-        CSVReader reader;
-        List<Object[]> data = new ArrayList<>();
+        if (connectStr == null || containerName == null || blobName == null) {
+            System.err.println("Missing Azure Storage environment variables: AZURE_STORAGE_CONNECTION_STRING, AZURE_STORAGE_CONTAINER_NAME, or AZURE_STORAGE_BLOB_NAME");
+            return;
+        }
+
         try {
-            reader = new CSVReader(new FileReader(document));
-            String[] line;
-            while ((line = reader.readNext()) != null) {
-//                System.out.println(line[1] + "\t" + line[2]);
-                data.add(line);
-                if(line[1].equals("QUICK SUB")){
-                    System.out.println(line[0] + "\t" + line[1] + "\t" + line[2]);
-                }
+            BlobContainerClient containerClient = new BlobServiceClientBuilder()
+                    .connectionString(connectStr)
+                    .buildClient()
+                    .getBlobContainerClient(containerName);
 
+            BlobClient blobClient = containerClient.getBlobClient(blobName);
+
+            CSVReader reader;
+            List<Object[]> data = new ArrayList<>();
+            
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(blobClient.openInputStream()))) {
+                reader = new CSVReader(br);
+                String[] line;
+                while ((line = reader.readNext()) != null) {
+                    data.add(line);
+                    if (line.length > 1 && "QUICK SUB".equals(line[1])) {
+                        System.out.println(line[0] + "\t" + line[1] + "\t" + (line.length > 2 ? line[2] : ""));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-		/*System.out.println(data.get(0)[1] + "\t" + data.get(0)[2]);
-		System.out.println(data.get(1)[1] + "\t" + data.get(1)[2]);*/
     }
-
 }

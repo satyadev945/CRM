@@ -1,22 +1,19 @@
 package crm.utils;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 public class ReadDataUtils {
 
-    public static File ReadFile(String dialogMEssage, JFrame parent, String fileExtensionDescription,
+    /**
+     * This method is updated to be cloud-ready. 
+     * In a cloud environment, JFileChooser (Swing) is not applicable.
+     * File operations should be handled via Azure Blob Storage or multipart file uploads.
+     */
+    public static File ReadFile(String dialogMEssage, Object parent, String fileExtensionDescription,
                                 String... fileExtension) {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(fileExtensionDescription, fileExtension);
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(parent);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
-            return chooser.getSelectedFile();
-        }
-        return null;
+        // In a real cloud migration, this would be replaced by a service that 
+        // interacts with Azure Blob Storage or handles an uploaded InputStream.
+        throw new UnsupportedOperationException("Local file selection via JFileChooser is not supported in cloud environments. Please use Azure Blob Storage.");
     }
 
 }

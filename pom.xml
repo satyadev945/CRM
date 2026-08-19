@@ -108,6 +108,11 @@
             <version>5.5.13</version>
         </dependency>
         <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>12.24.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
             <version>2.0.8</version>
@@ -136,6 +141,11 @@
             <groupId>net.sf.supercsv</groupId>
             <artifactId>super-csv</artifactId>
             <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-messaging-servicebus</artifactId>
+            <version>7.14.0</version>
         </dependency>
     </dependencies>
 
