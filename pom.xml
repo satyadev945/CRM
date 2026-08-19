@@ -137,6 +137,19 @@
             <artifactId>super-csv</artifactId>
             <version>2.4.0</version>
         </dependency>
+        <!-- Azure Blob Storage SDK - replaces local file system / Swing JFileChooser dependency -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>12.25.1</version>
+        </dependency>
+        <!-- Azure Service Bus SDK - replaces java.util.Timer / server-local scheduling (cr-java-0111)
+             Use Azure Service Bus Scheduled Messages for distributed, timezone-agnostic task execution -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-messaging-servicebus</artifactId>
+            <version>7.15.1</version>
+        </dependency>
     </dependencies>
 
     <build>
