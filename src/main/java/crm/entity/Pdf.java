@@ -12,10 +12,12 @@ import jakarta.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "pdf")
 public class Pdf {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pdf_seq")
+    @SequenceGenerator(name = "pdf_seq", sequenceName = "pdf_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)

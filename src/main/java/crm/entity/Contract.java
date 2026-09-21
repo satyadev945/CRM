@@ -14,10 +14,12 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "contract")
 public class Contract {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
+    @SequenceGenerator(name = "contract_seq", sequenceName = "contract_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)
