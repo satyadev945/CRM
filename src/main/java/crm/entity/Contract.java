@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -42,8 +41,5 @@ public class Contract {
 
     @ManyToOne
     private User user;
-
-//    @Transient
-//    private DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
 }
