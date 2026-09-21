@@ -23,7 +23,7 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <thymeleaf.extras.java8time.version>3.1.0.RELEASE</thymeleaf.extras.java8time.version>
+        <thymeleaf.extras.java8time.version>3.0.4.RELEASE</thymeleaf.extras.java8time.version>
         <postgresql.version>42.7.4</postgresql.version>
         <lombok.version>1.18.30</lombok.version>
         <opencsv.version>5.9</opencsv.version>
@@ -166,6 +166,25 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.2.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,8 @@ public class CSVController {
 
     @GetMapping(value = "/customers", produces = "text/csv")
     public void findCustomers(HttpServletResponse httpServletResponse) throws IOException {
-        List<Customer> customers = customerService.listAllCustomers();
+        List<Customer> customers = new ArrayList<>();
+        customerService.listAllCustomers().forEach(customers::add);
         WriteCsvToResponse.writeCustomers(httpServletResponse.getWriter(), customers);
     }
 
