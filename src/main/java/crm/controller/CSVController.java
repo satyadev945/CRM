@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class CSVController {
 
     @GetMapping(value = "/customers", produces = "text/csv")
     public void findCustomers(HttpServletResponse httpServletResponse) throws IOException {
-        List<Customer> customers = (List<Customer>) customerService.listAllCustomers();
+        List<Customer> customers = customerService.listAllCustomers();
         WriteCsvToResponse.writeCustomers(httpServletResponse.getWriter(), customers);
     }
 

@@ -1,13 +1,17 @@
 package crm.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.*;
 
 @Entity(name = "users")
 @Data
@@ -25,7 +29,7 @@ public class User {
 
     @Column(name = "email", nullable = false, unique = true)
     @Email(message = "Please provide a valid e-mail")
-    @NotEmpty(message = "Please provide an e-mail")
+    @NotBlank(message = "Please provide an e-mail")
     private String email;
 
     private String firstName;
@@ -54,5 +58,4 @@ public class User {
     public String getName() {
         return firstName + " " + lastName;
     }
-
 }

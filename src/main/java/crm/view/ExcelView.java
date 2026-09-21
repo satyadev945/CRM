@@ -1,45 +1,61 @@
 package crm.view;
 
 import crm.entity.User;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.*;
-import org.springframework.web.servlet.view.document.AbstractXlsView;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.web.servlet.view.AbstractView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-public class ExcelView extends AbstractXlsView{
+public class ExcelView extends AbstractView {
+
+    public ExcelView() {
+        setContentType("application/vnd.ms-excel");
+    }
 
     @Override
-    protected void buildExcelDocument(Map<String, Object> model,
-                                      Workbook workbook,
-                                      HttpServletRequest request,
-                                      HttpServletResponse response) throws Exception {
+    protected boolean generatesDownloadContent() {
+        return true;
+    }
 
-        // change the file name
+    @Override
+    protected void renderMergedOutputModel(Map<String, Object> model,
+                                           HttpServletRequest request,
+                                           HttpServletResponse response) throws Exception {
+        response.setContentType(getContentType());
         response.setHeader("Content-Disposition", "attachment; filename=\"my-xls-file.xls\"");
 
+        try (Workbook workbook = new HSSFWorkbook()) {
+            buildExcelDocument(model, workbook);
+            workbook.write(response.getOutputStream());
+        }
+    }
+
+    private void buildExcelDocument(Map<String, Object> model, Workbook workbook) {
         @SuppressWarnings("unchecked")
         List<User> users = (List<User>) model.get("users");
 
-        // create excel xls sheet
         Sheet sheet = workbook.createSheet("User Detail");
         sheet.setDefaultColumnWidth(30);
 
-        // create style for header cells
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
         font.setFontName("Arial");
-        style.setFillForegroundColor(HSSFColor.BLUE.index);
+        style.setFillForegroundColor(IndexedColors.BLUE.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         font.setBold(true);
-        font.setColor(HSSFColor.WHITE.index);
+        font.setColor(IndexedColors.WHITE.getIndex());
         style.setFont(font);
 
-
-        // create header row
         Row header = sheet.createRow(0);
         header.createCell(0).setCellValue("FirstName");
         header.getCell(0).setCellStyle(style);
@@ -59,9 +75,8 @@ public class ExcelView extends AbstractXlsView{
         header.getCell(7).setCellStyle(style);
 
         int rowCount = 1;
-
-        for(User user : users){
-            Row userRow =  sheet.createRow(rowCount++);
+        for (User user : users) {
+            Row userRow = sheet.createRow(rowCount++);
             userRow.createCell(0).setCellValue(user.getFirstName());
             userRow.createCell(1).setCellValue(user.getLastName());
             userRow.createCell(2).setCellValue(user.getUsername());
@@ -71,7 +86,5 @@ public class ExcelView extends AbstractXlsView{
             userRow.createCell(6).setCellValue(user.getRole().getId());
             userRow.createCell(7).setCellValue(user.getRole().getName());
         }
-
     }
-
 }

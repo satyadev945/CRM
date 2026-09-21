@@ -20,7 +20,7 @@ public class Export {
     @GetMapping("/download")
     public String download(Model model) {
         model.addAttribute("users", userService.listAllUsers());
-        return "";
+        return "excelView";
     }
 
 }

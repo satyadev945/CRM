@@ -1,6 +1,7 @@
 package crm.csv;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import crm.utils.ReadDataUtils;
 
 import java.io.File;
@@ -12,27 +13,19 @@ import java.util.List;
 public class CSVTest {
 
     public static void main(String[] args) {
-        File document = ReadDataUtils.ReadFile("Select CSV file", null, "Only CSV Files", "csv");
-//        System.out.println(document.getName());
+        File document = ReadDataUtils.readFile("Select CSV file", null, "Only CSV Files", "csv");
 
-        CSVReader reader;
         List<Object[]> data = new ArrayList<>();
-        try {
-            reader = new CSVReader(new FileReader(document));
+        try (CSVReader reader = new CSVReader(new FileReader(document))) {
             String[] line;
             while ((line = reader.readNext()) != null) {
-//                System.out.println(line[1] + "\t" + line[2]);
                 data.add(line);
-                if(line[1].equals("QUICK SUB")){
+                if (line.length > 2 && "QUICK SUB".equals(line[1])) {
                     System.out.println(line[0] + "\t" + line[1] + "\t" + line[2]);
                 }
-
             }
-        } catch (IOException e) {
+        } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-		/*System.out.println(data.get(0)[1] + "\t" + data.get(0)[2]);
-		System.out.println(data.get(1)[1] + "\t" + data.get(1)[2]);*/
     }
-
 }

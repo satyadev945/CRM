@@ -10,7 +10,7 @@ public class ExcelViewResolver implements ViewResolver {
 
     @Override
     public View resolveViewName(String s, Locale locale) throws Exception {
-        return new ExcelView();
+        return "excelView".equalsIgnoreCase(s) ? new ExcelView() : null;
     }
 
 }

@@ -1,22 +1,17 @@
 package crm.controller;
 
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
-@RestController
-public class MyErrorController implements ErrorController {
+@Controller
+public class MyErrorController {
 
-    private static final String PATH = "/error";
-
-    @RequestMapping(value = PATH)
+    @RequestMapping("/error")
+    @ResponseBody
     public String error() {
-        return "Error handling";
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error handling");
     }
-
-    @Override
-    public String getErrorPath() {
-        return PATH;
-    }
-
 }

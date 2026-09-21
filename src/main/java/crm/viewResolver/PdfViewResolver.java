@@ -10,7 +10,7 @@ public class PdfViewResolver implements ViewResolver {
 
     @Override
     public View resolveViewName(String s, Locale locale) throws Exception {
-        return new PdfView();
+        return "pdfView".equalsIgnoreCase(s) ? new PdfView() : null;
     }
 
 }

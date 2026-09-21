@@ -10,7 +10,7 @@ public class CsvViewResolver implements ViewResolver {
 
     @Override
     public View resolveViewName(String s, Locale locale) throws Exception {
-        return new CsvView();
+        return "csvView".equalsIgnoreCase(s) ? new CsvView() : null;
     }
 
 }
