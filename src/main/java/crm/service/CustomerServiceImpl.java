@@ -18,7 +18,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Long getMaxId() {
-        return customerRepository.getMaxId();
+        Customer customer = customerRepository.findTopByOrderByIdDesc();
+        return customer != null ? customer.getId() : 0L;
     }
 
     @Override

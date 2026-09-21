@@ -3,7 +3,6 @@ package crm.repository;
 import crm.entity.Category;
 import crm.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
@@ -20,8 +19,7 @@ import java.util.Set;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query(value = "select max(id) from crm.customer", nativeQuery = true)
-    Long getMaxId();
+    Customer findTopByOrderByIdDesc();
 
     Iterable<Customer> findAllByEnabled(int enabled);
 
