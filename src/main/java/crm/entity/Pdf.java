@@ -5,10 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
-@Entity(name = "pdf")
+@Entity
+@Table(name = "pdf")
 @Data
 @Builder
 @NoArgsConstructor
