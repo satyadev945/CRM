@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User showUser(Long id) {
-        return userRepository.findOne(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(password));
         Role userRole = roleRepository.findByName("ROLE_USER");
         try {
-            userRole = roleRepository.findOne(user.getRole().getId());
+            userRole = roleRepository.findById(user.getRole().getId()).orElse(null);
         } catch (NullPointerException e) {
             userRole = roleRepository.findByName("ROLE_USER");
         } finally {

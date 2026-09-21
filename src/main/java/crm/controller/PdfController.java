@@ -1,9 +1,10 @@
 package crm.controller;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import crm.entity.Pdf;
 import crm.service.PdfService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -27,15 +28,14 @@ public class PdfController {
         this.pdfService = pdfService;
     }
 
-    private void generateSamplePdf(String fileName, String text) throws FileNotFoundException, DocumentException {
+    private void generateSamplePdf(String fileName, String text) throws FileNotFoundException {
         if (!fileName.endsWith(".pdf")) {
             fileName += ".pdf";
         }
-        Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(fileName));
-        document.open();
-        Paragraph paragraph = new Paragraph(text);
-        document.add(paragraph);
+        PdfWriter writer = new PdfWriter(new FileOutputStream(fileName));
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+        document.add(new Paragraph(text));
         document.close();
     }
 
@@ -55,8 +55,6 @@ public class PdfController {
                 pdfService.savePdf(pdf);
             } catch (FileNotFoundException e) {
                 log.info("File Not Found");
-            } catch (DocumentException e) {
-                log.info("Document");
             }
             return "pdf/success";
         }
